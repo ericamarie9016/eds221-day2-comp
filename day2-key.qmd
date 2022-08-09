@@ -43,6 +43,7 @@ as.integer(years)
 ```
 
 ## Create named elements
+
 ```{r}
 # Vector adding attribute
 dog_food <- c(teddy = "purina", khora = "alpo", waffle = "fancy feast")
@@ -53,3 +54,136 @@ dog_food[2]
 dog_food["khora"]
 ```
 
+```{r}
+cars <- c("blue", "orange", "white")
+cars[1]
+
+i <- seq(1:2)
+cars[i]
+
+```
+
+```{r}
+# Vectors are mutable/changeable directly
+cars[3] <- "yellow"
+cars
+```
+
+## Matrices
+
+```{r}
+# Make a vector and wrap into a matrix by stating rowxcolumn
+fish_size <- matrix(c(12, 14, 18, 20), ncol = 2, nrow = 2, byrow = FALSE)
+
+fish_size
+
+class(fish_size)
+typeof(fish_size)
+
+# Example indexing
+fish_size[1,1]
+fish_size[2,1]
+
+# What happens if we create a matrix with different types of data
+fish_type <- matrix(c(12, "trout", 18, 13L), ncol = 2, nrow = 2, byrow = FALSE)
+fish_type
+class(fish_type)
+typeof(fish_type)
+
+# Indexing: Leave an empty space means search for all matching
+fish_size[2, ]
+fish_size[ ,1]
+```
+
+## Lists
+
+Reminder: A list combines vectors that can be of different length and type
+
+```{r}
+urchins <- list("blue", c(1, 2, 3), c("a cat", "a dog"), 5L)
+urchins
+
+# List is broken down by elements with [[ element ]]
+urchins[3] # still a list of one element
+urchins[[3]] # returns the vector outside the list
+class(urchins[3])
+class(urchins[[3]])
+
+```
+
+### Named list
+
+```{r}
+tacos <- list(topping = c("onion", "cilantro", "guacamole"), 
+              filling = c("beans", "meat", "veggies"),
+              price = c(6.75, 8.25, 9.50))
+
+tacos
+
+# Index list elements by name
+
+tacos$filling # Brings out the vector
+tacos$filling[3]
+
+```
+
+```{r}
+# Named lists powerful for ttest
+# T-test
+a <- c(1, 2, 3)
+b <- c(3, 4, 5)
+
+ab_ttest <- t.test(a, b)
+ab_ttest
+class(ab_ttest) # list that contains different elements
+# As a list, can pull out just specific values
+ab_ttest$p.value
+```
+
+```{r}
+# Named list powerful for reproducibility
+
+# IN r markdown stored value
+my_list <- list(cats = c(1, 2, 3), dogs = c(10, 11, 12))
+```
+
+Add changeable value in text
+
+The second value of dogs is `r my_list$dogs[2]`
+
+## Data Frames
+
+```{r}
+# Option to create separate vectors then combine
+# Vectors must be the same length
+topping <-  c("onion", "cilantro", "guacamole")
+filling <-  c("beans", "meat", "veggies")
+price <-  c(6.75, 8.25, 9.50)
+
+df_taco1 <- data.frame(topping, filling, price)
+class(df_taco1)
+
+# create a frame in one line
+df_taco2 <- data.frame(topping = c("sour cream", "salsa", "cheese"),
+                       filling = c("chicken", "mushroom", "more cheese"),
+                       price = c(12.50, 13.75, 15))
+
+# Tibble
+library(tidyverse)
+df_taco3 <- tribble(
+  ~topping, ~filling, ~price,
+  "avocado", "mushroom", 13.25,
+  "radish", "fish", 15.50,
+  "salsa", "veggies", 9.75
+)
+class(df_taco3)
+```
+
+### Indexing
+
+```{r}
+df_taco3$price
+df_taco3$price[3]
+```
+
+##  
